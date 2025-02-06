@@ -6,6 +6,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: run a sample
+      uses: actions/checkout@v4
+    
+      name: run a sample
       run: echo Hello World
+
+      name: upload artifact
+      uses: action/upload-artifact@v4
+      with:
+       name: build-artifact:
+       path: ${{github.workspace}}
+      
+      
+  deploy:  
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+      - name: built-artifact
+      - path: ${{github.workspace}}
